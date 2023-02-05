@@ -1,0 +1,31 @@
+
+<div class="container">
+  <div class="row mt-4">
+    <h2>Invoices</h2>
+    <p class="pull-right"><a href="/invoices/new">Create Invoice</a></p>
+  </div>
+  <div class="row mt-4">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Title</th>
+          <th scope="col">Invoice Number</th>
+          <th scope="col">Status</th>
+          <th scope="col">Items Count</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @invoices.each do |invoice| %>
+          <tr>
+            <td><%= invoice.id %></td>
+            <td><%= link_to invoice.title, invoice_path(invoice.id) %></td>
+            <td><%= invoice.invoice_number %></td>
+            <td><span class=<%= status_color(invoice.status)%>><%= invoice.status %></td>
+            <td><%= invoice.invoice_items.length %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

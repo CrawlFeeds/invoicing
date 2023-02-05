@@ -1,0 +1,56 @@
+<%= nested_form_for @invoice, method: :post do |form| %>
+  <% if invoice.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(invoice.errors.count, "error") %> prohibited this invoice from being saved:</h2>
+
+      <ul>
+      <% invoice.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row mt-4">
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.text_field :title, class: "form-control", placeholder: "Invoice title" %>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="form-group">
+        <%= form.text_field :email, class: "form-control", placeholder: "Email (send invoice to)" %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-lg-12 col-sm-12">
+      <%= form.fields_for :invoice_items do |site| %>
+        <div class="form-group fields">
+          <div class="row mt-2">
+            <div class="col-md-3">
+              <%= site.text_field :title, class: "form-control", placeholder: "Product name", required: true %>
+            </div>
+            <div class="col-md-3">
+              <%= site.number_field :price, class: "form-control", :step => "0.01", placeholder: "price", required: true %>
+            </div>
+            <div class="col-md-3">
+              <%= site.number_field :quantity, class: "form-control", placeholder: "Quantity", required: true %>
+            </div>
+            <div class="col-md-3">
+              <%= site.link_to_remove "REMOVE", class: "badge-warning text-uppercase" %>
+            </div>
+            
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-lg-12 col-sm-12 mt-4 mb-4">
+      <%= form.link_to_add 'Add invoice items', :invoice_items %>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Create Invoice", class: "btn btn-primary" %>
+  </div>
+<% end %>
